@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { X } from 'lucide-react';
+import { predictSausage } from '../API/API';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -18,13 +19,8 @@ const SausPre = ({ onClose, imagePreview, selectedImage }) => {
     setLoading(true);
     setError(null);
     try {
-      const formData = new FormData();
-      formData.append('file', selectedImage);
-      const response = await fetch('http://localhost:5000/predict', {
-        method: 'POST', body: formData,
-      });
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      setPredictionData(await response.json());
+      const data = await predictSausage(selectedImage);
+      setPredictionData(data);
     } catch (err) {
       setError(err.message || 'An error occurred during prediction');
     } finally {
@@ -106,7 +102,6 @@ const SausPre = ({ onClose, imagePreview, selectedImage }) => {
 
   const colors = ['#6366f1', '#8b5cf6', '#f472b6'];
   const { top_3_predictions = [], confidence = 0, predicted_class } = predictionData;
-  // sort locally to guarantee consistent ordering even if backend changes
   const sortedPredictions = [...top_3_predictions].sort(
     (a, b) => b.confidence - a.confidence
   );

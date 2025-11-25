@@ -126,17 +126,7 @@ def predict():
     except Exception as e:
         return jsonify({"error": f"Prediction failed: {str(e)}"}), 500
 
-@app.route("/health")
-def health():
-    global model
-    if model is None:
-        try:
-            load_model_once()
-            return jsonify({"status": "healthy", "model_loaded": True})
-        except Exception as e:
-            return jsonify({"status": "unhealthy", "model_loaded": False, "error": str(e)}), 500
-    else:
-        return jsonify({"status": "healthy", "model_loaded": True})
+
 
 if __name__ == "__main__":
     # Load model on startup

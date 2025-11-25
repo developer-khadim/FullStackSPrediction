@@ -34,7 +34,7 @@ const Aboutus = () => {
 
         <ProfileCard
           name="Hamad Ahmed"
-          title="CS Student || Frontend Learner"
+          title="CS Student"
           handle="HamadAhmed"
           status="Available"
           avatarUrl={hamad}

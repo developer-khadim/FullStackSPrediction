@@ -1,6 +1,6 @@
 ## FullStack SAUS Prediction
 
-> Smart Academic & University Spaces (SAUS) classifier powered by MobileNetV2 + Vite/React, delivering instant campus-scene recognition with a polished UX.
+> Smart Academic & University Spaces The Shaikh Ayaz University Shikarpur (SAUS) classifier powered by MobileNetV2 + Vite/React, delivering instant campus-scene recognition with a polished UX.
 
 | Backend | Frontend | Deep Learning |
 | --- | --- | --- |
@@ -29,7 +29,7 @@
 
 ### Highlights
 - **MobileNetV2 model** trained on Auditorium, Classroom, Ground, Indoor, Lab, Office, and Outdoor campus spaces.
-- **Flask inference API** with `/predict` and `/health` endpoints, top-3 confidences, and lazy model loading.
+- **Flask inference API** with `/predict` endpoint, top-3 confidences, and lazy model loading.
 - **React + Tailwind UI** with authentication stubs, modern visuals, preview modal, and live charting via Chart.js.
 - **Dataset-ready structure** (`SAUS/Train|Val|Test`) for further fine-tuning or benchmarking.
 - **Report & notebook artifacts** (`DeepLearning/SAUS.ipynb`, `Frontend/src/Report/Deep-Learning-Project-Report.pdf`).
@@ -39,8 +39,22 @@
 ### Repository Layout
 ```
 Backend/          # Flask API + TensorFlow model + SAUS dataset splits
+├── utils/        # Utility functions for prediction
+├── app.py        # Main Flask application
+├── requirements.txt  # Python dependencies
+└── model/        # Trained MobileNetV2 model weights
+
 DeepLearning/     # Training notebooks and saved Keras weights
 Frontend/         # Vite + React client (TailwindCSS, chart.js)
+├── src/          # Source code
+│   ├── components/   # Reusable UI components
+│   ├── pages/        # Page components
+│   ├── API/          # API service layer
+│   ├── context/      # React context providers
+│   └── assets/       # Static assets
+├── public/       # Public assets
+└── Report/       # Project report
+
 Report/           # Documentation or presentation assets
 README.md         # You are here
 ```
@@ -59,7 +73,7 @@ README.md         # You are here
 cd Backend
 python -m venv .venv && .venv\Scripts\activate     # win (use `source .venv/bin/activate` on mac/linux)
 pip install -r requirements.txt
-python app.py                                      # serves :5000 with /predict and /health
+python app.py                                      # serves :5000 with /predict endpoint
 ```
 - The shipped `model/saus_mobilenetv2_final.keras` loads automatically. Replace it with a new checkpoint if you
   retrain in `DeepLearning/SAUS.ipynb`.
@@ -93,7 +107,7 @@ Response 200:
   ]
 }
 ```
-Common errors: `400` (no file), `500` (model missing/corrupt). Use `GET /health` to verify weights were loaded.
+Common errors: `400` (no file), `500` (model missing/corrupt). The backend automatically loads the model on startup.
 
 ---
 
