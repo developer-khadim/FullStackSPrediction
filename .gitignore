@@ -1,0 +1,13 @@
+# Ignore node modules
+node_modules/
+
+# Ignore SAUS folder
+SAUS/
+
+# Optional: ignore environment files
+.env
+.env.local
+
+# Optional: ignore build outputs
+dist/
+build/

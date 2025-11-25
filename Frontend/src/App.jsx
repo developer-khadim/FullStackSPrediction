@@ -1,11 +1,14 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { FaHome, FaChartLine, FaInfoCircle } from 'react-icons/fa';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Predictors from './pages/Predictors';
 import Aboutus from './pages/Aboutus';
 import Navbar from './components/Navbar';
-import SausPre from './pages/SausPre';
+import SausPre from './components/SausPre';
+import SignIn from './pages/SignIn';
+import Signup from './pages/Signup';
+import ProtectedRoute from './components/ProtectedRoute';
+
 
 
 const App = () => {
@@ -17,9 +20,25 @@ const App = () => {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/predictors" element={<Predictors />} />
+            <Route
+              path="/predictors"
+              element={
+                <ProtectedRoute>
+                  <Predictors />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/about" element={<Aboutus />} />
-            <Route path="/SausPre" element={<SausPre />} />
+            <Route
+              path="/SausPre"
+              element={
+                <ProtectedRoute>
+                  <SausPre />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
         </main>
 

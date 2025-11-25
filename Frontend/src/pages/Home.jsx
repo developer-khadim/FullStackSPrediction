@@ -24,7 +24,7 @@ const Home = () => {
           </h1>
           
           <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
-            AI-powered recognition of university spaces. Upload images and instantly 
+            Deep-Learning powered recognition of university spaces. Upload images and instantly 
             identify classrooms, labs, offices, and outdoor areas.
           </p>
         </div>
@@ -33,22 +33,23 @@ const Home = () => {
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Link
             to="/predictors"
-            className="px-8 py-3.5 bg-white text-gray-900 rounded-full font-semibold text-base hover:bg-gray-100 transition-all shadow-2xl hover:scale-105"
+            className="px-8 py-3.5 bg-indigo-500 text-white rounded-full font-semibold text-base hover:bg-transparent hover:border-indigo-500 hover:border-2 transition-all shadow-2xl "
           >
             Start Predicting
           </Link>
-          <Link
-            to="/docs"
-            className="px-8 py-3.5 bg-white/10 backdrop-blur-sm text-white rounded-full font-semibold text-base hover:bg-white/20 transition-all ring-1 ring-white/20"
+          <a
+            href="https://drive.google.com/file/d/1rFdlK2guEJAM_V9ILnEwJH0SMfpWoqW2/view?usp=sharing"
+            target='_blank'
+            className="px-8 py-3.5 bg-white/10 backdrop-blur-sm text-white rounded-full font-semibold text-base hover:bg-indigo-500 transition-all ring-1 ring-white/20"
           >
-            View Docs
-          </Link>
+            View Report
+          </a>
         </div>
 
         {/* Stats */}
         <div className="flex flex-wrap items-center justify-center gap-8 pt-8 text-white/80">
           <div className="text-center">
-            <div className="text-3xl font-bold text-white">7+</div>
+            <div className="text-3xl font-bold text-white">6+</div>
             <div className="text-sm">Space Categories</div>
           </div>
           <div className="w-px h-12 bg-white/20"></div>

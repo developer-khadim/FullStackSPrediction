@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { FaHome, FaChartLine, FaInfoCircle, FaUser, FaUserPlus } from 'react-icons/fa'
+import { FaHome, FaChartLine, FaInfoCircle, FaUser, FaUserPlus, FaSignOutAlt } from 'react-icons/fa'
 import { Link, useLocation } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext.jsx'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
+  const { user, logout } = useAuth()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
@@ -63,20 +65,46 @@ const Navbar = () => {
 
           {/* right auth buttons (desktop) */}
           <div className="hidden md:flex items-center gap-3">
-            <Link
-              to="/signin"
-              className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors"
-            >
-              <FaUser className="text-sm" />
-              <span>Sign In</span>
-            </Link>
-            <Link
-              to="/signup"
-              className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
-            >
-              <FaUserPlus className="text-sm" />
-              <span>Sign Up</span>
-            </Link>
+            {user ? (
+              <>
+                <div className="flex items-center gap-2 rounded-full border border-gray-200 px-3 py-1.5">
+                  <div className="h-8 w-8 rounded-full bg-indigo-600 text-white flex items-center justify-center text-sm font-semibold uppercase">
+                    {user.fullName?.[0] || user.email?.[0]}
+                  </div>
+                  <div className="text-left">
+                    <p className="text-sm font-semibold text-gray-900 leading-tight">{user.fullName || 'Explorer'}</p>
+                    <p className="text-xs text-gray-500">{user.isGuest ? 'Guest access' : user.email}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    logout()
+                    setIsMenuOpen(false)
+                  }}
+                  className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+                >
+                  <FaSignOutAlt className="text-sm" />
+                  <span>Sign out</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/signin"
+                  className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                >
+                  <FaUser className="text-sm" />
+                  <span>Sign In</span>
+                </Link>
+                <Link
+                  to="/signup"
+                  className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+                >
+                  <FaUserPlus className="text-sm" />
+                  <span>Sign Up</span>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* mobile menu button */}
@@ -147,23 +175,49 @@ const Navbar = () => {
           </div>
 
           {/* auth buttons at bottom */}
-          <div className="pt-4 border-t border-gray-200 flex flex-col gap-3">
-            <Link
-              to="/signin"
-              onClick={() => setIsMenuOpen(false)}
-              className="flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-base font-medium text-gray-800 hover:bg-gray-100"
-            >
-              <FaUser className="text-base" />
-              <span>Sign In</span>
-            </Link>
-            <Link
-              to="/signup"
-              onClick={() => setIsMenuOpen(false)}
-              className="flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-            >
-              <FaUserPlus className="text-base" />
-              <span>Sign Up</span>
-            </Link>
+          <div className="pt-4 border-t border-gray-200 flex flex-col gap-3 w-full max-w-xs">
+            {user ? (
+              <>
+                <div className="flex items-center gap-3 rounded-2xl border border-gray-200 px-4 py-3">
+                  <div className="h-10 w-10 rounded-full bg-indigo-600 text-white flex items-center justify-center text-base font-semibold uppercase">
+                    {user.fullName?.[0] || user.email?.[0]}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">{user.fullName || 'Explorer'}</p>
+                    <p className="text-sm text-gray-500">{user.isGuest ? 'Guest access' : user.email}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    logout()
+                    setIsMenuOpen(false)
+                  }}
+                  className="flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                >
+                  <FaSignOutAlt className="text-base" />
+                  <span>Sign out</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/signin"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-base font-medium text-gray-800 hover:bg-gray-100"
+                >
+                  <FaUser className="text-base" />
+                  <span>Sign In</span>
+                </Link>
+                <Link
+                  to="/signup"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                >
+                  <FaUserPlus className="text-base" />
+                  <span>Sign Up</span>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
